@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CSS from 'csstype';
 import Particles from 'react-particles-js';
 import VizSensor from 'react-visibility-sensor';
-import data from "../august_2018.json";
+import data from "../json/septembrie_2019.json";
 import { CustomSelect } from '../components/CustomSelect';
 
 export const MainPage: React.FC = () => {
@@ -13,14 +13,14 @@ export const MainPage: React.FC = () => {
 		let min = 9999999;
 		let minName = '';
 		data.map(e => {
-			if (e.district.heads[0].value < min) {
-				min = Number(e.district.heads[0].value);
+			if (e.district.generals[0].value < min) {
+				min = Number(e.district.generals[0].value);
 				minName = e.district.name
 			}
 
 			/* console.log(e.district.name);
-			console.log(e.district.heads[0].name);
-			console.log(e.district.heads[0].value); */
+			console.log(e.district.generals[0].name);
+			console.log(e.district.generals[0].value); */
 		})
 		
 		return {
@@ -35,12 +35,21 @@ export const MainPage: React.FC = () => {
 		})
 	}
 
+	const getListOfDistrictsWithDetails = () => {
+		return data.map(e => {
+			return {
+				name: e.district.name,
+				value: e.district.generals[0].value
+			}
+		})
+	}
+
 	const getMoreCriminal = () => {
 		let max = 0;
 		let maxName = '';
 		data.map(e => {
-			if (e.district.heads[0].value > max && e.district.name !== 'TOTAL') {
-				max = Number(e.district.heads[0].value);
+			if (e.district.generals[0].value > max && e.district.name !== 'TOTAL') {
+				max = Number(e.district.generals[0].value);
 				maxName = e.district.name
 			}
 		})
@@ -57,7 +66,7 @@ export const MainPage: React.FC = () => {
 
 			return {
 				name: obj?.district.name,
-				value: Number(obj?.district.heads[0].value)
+				value: Number(obj?.district.generals[0].value)
 			}
 		} else {
 			return {
@@ -123,19 +132,20 @@ export const MainPage: React.FC = () => {
 								"value": "#000000"
 							},
 							"size": {
-								"value": 10
+								"value": 5
 							},
 							"number": {
 								"value": number
 							},
 							"move": {
-								"speed": 10
+								"speed": 5
 							}
 						}
 				}}
     	/>
 		</div>
 		<div className="container">
+			<img className="page-logo" src="/crimanality.png" alt="Logo"/>
 			<div className="screen page-top">
 				<div className="page-header">
 				See a Plethora of Comitted Crimes Throghout The Distrcts of Moldova
